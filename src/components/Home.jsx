@@ -1,13 +1,17 @@
 import 'Home.css'
 import { useState, useEffect } from 'react'
-import { getAllPics, uploadPic, editPicById, deletePicById } from '../services/services.js';
+import { getAllPics, uploadPic, editPicById, deletePicById, getPicById } from '../services/services.js';
 
 export function Home() {
     const [pic, setPic] = useState(null)
     const [selectedImage, setSelectedImage] = useState(null)
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
+    const [search, setSearch] = useState('')
 
+    const handleSearch =async(id)=>{
+        await getPicById(id);
+    } 
     const handleEditPic =async(id)=>{
         await editPicById(id);
     }
@@ -20,8 +24,8 @@ export function Home() {
         await uploadPic(file);
     };
     const handleGetAllPics = async () => {
-        const pictures = await getAllPics();
-        setPic(pictures);
+        const pics = await getAllPics();
+        setPic(pics);
     };
 
     useEffect(() => {
@@ -30,18 +34,23 @@ export function Home() {
 
     return (
         <>
+        <div>
+        <label htmlFor="search">search</label>
+                <input id='search' type="text" value={search} onChange={(event) => { setSearch(event.target.value) }} /> 
+                <button onClick={()=>{handleSearch(search)}}></button>
+        </div>
             <div>
-                <label htmlFor="title"></label>
+                <label htmlFor="title">title</label>
                 <input id='title' type="text" value={title} onChange={(event) => { setTitle(event.target.value) }} />
-                <label htmlFor="description"></label>
+                <label htmlFor="description">description</label>
                 <input id='description' type="text" value={description} onChange={(e) => { setDescription(e.target.value) }} />
 
-                <label htmlFor="upload"></label>
+                <label htmlFor="upload">upload</label>
                 <input id='upload' type="file" accept="image/*" value={selectedImage} onChange={(event) => { setSelectedImage(event.target.files[0]) }} />
                 <button onClick={() => { handleUploadPic(file) }}>upload picture</button>
             </div>
             <div>
-                <button onClick={handleGetAllPics}> see pictures</button>
+                <button onClick={handleGetAllPics}> see pics</button>
             </div>
             <div className="homepage">
                 {pic.map((p) => {

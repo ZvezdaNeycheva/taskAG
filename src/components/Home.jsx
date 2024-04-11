@@ -1,6 +1,6 @@
 import 'Home.css'
 import { useState, useEffect } from 'react'
-import { getAllPics } from '../services/services.js';
+import { getAllPics, uploadPic, editPicById, deletePicById } from '../services/services.js';
 
 export function Home() {
     const [pic, setPic] = useState(null)
@@ -8,9 +8,16 @@ export function Home() {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
 
+    const handleEditPic =async(id)=>{
+        await editPicById(id);
+    }
 
-    const handleUploadPic = (file) => {
+    const handleDeletePic =async(id)=>{
+        await deletePicById(id);
+    }
 
+    const handleUploadPic = async(file) => {
+        await uploadPic(file);
     };
     const handleGetAllPics = async () => {
         const pictures = await getAllPics();

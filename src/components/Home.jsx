@@ -1,16 +1,25 @@
-import 'Home.css'
+import './Home.css'
 import { useState, useEffect } from 'react'
 import { getAllPics, uploadPic, editPicById, deletePicById, getPicById } from '../services/services.js';
+import { useSearchParams } from "react-router-dom";
 
 export function Home() {
     const [pic, setPic] = useState(null)
     const [selectedImage, setSelectedImage] = useState(null)
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [search, setSearch] = useState('')
+    const [searchParams, setSearchParams] = useSearchParams();
 
-    const handleSearch =async(id)=>{
-        await getPicById(id);
+    const search = searchParams.get('search') || '';
+
+    const setSearch = (value) => {
+      setSearchParams({search: value});
+    };
+
+    const handleSearch =async(value)=>{
+        setSearchParams({search: value});
+
+        // await getPicById(value);
     } 
     const handleEditPic =async(id)=>{
         await editPicById(id);
@@ -29,9 +38,9 @@ export function Home() {
     };
 
     useEffect(() => {
-        handleGetAllPics()
-    }, [pic])
-
+        handleGetAllPics(search).then(setPic)
+    }, [search])
+e => setSearch(e.target.value)
     return (
         <>
         <div>

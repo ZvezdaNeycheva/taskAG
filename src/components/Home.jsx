@@ -39,10 +39,11 @@ export function Home() {
             <div className="homepage">
                 {pic.map((p) => {
                     <div key={p.id}>
-
-                        <img src={pic.picUrl} alt="pic" />
-                        <button onClick={() => { handleEditPic(idPic) }}>edit</button>
-                        <button onClick={() => { handleDeletePic(idPic) }}>delete</button>
+                        <p>{p.title}</p>
+                        <p>{p.description}</p>
+                        <img src={pic.picUrl} alt={p.title} />
+                        <button onClick={() => { handleEditPic(p.id) }}>edit</button>
+                        <button onClick={() => { handleDeletePic(p.id) }}>delete</button>
 
                     </div>
                 })}

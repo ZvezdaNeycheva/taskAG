@@ -25,7 +25,7 @@ export function Home() {
         <>
             <div>
                 <label htmlFor="title"></label>
-                <input id='title' type="text" value={title} onChange={(event) => { setSelectedImage(event.target.value) }} />
+                <input id='title' type="text" value={title} onChange={(event) => { setTitle(event.target.value) }} />
                 <label htmlFor="description"></label>
                 <input id='description' type="text" value={description} onChange={(e) => { setDescription(e.target.value) }} />
 
